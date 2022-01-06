@@ -1,10 +1,10 @@
 {
-    "name": "falcon/falconuploader",
+    "name": "reza/falconuploader",
     "description": "falcon uploader is a php file uploader. that upload any type of file. its created by Md. Shaheen Reza at IT CORNER. created at first january 2022",
     "type": "composer-plugin",
     "autoload": {
         "psr-4": {
-            "Falcon\\Falconuploader\\": "src/"
+            "reza\\Falconuploader\\": "src/"
         }
     },
     "authors": [
