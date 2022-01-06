@@ -1,0 +1,14 @@
+.code-border{
+    border-left-color: green !important;
+    border-left-width: 8px !important;
+}
+span.variable {
+    color: blue;
+}
+span.array-element {
+    color: purple;
+}
+span.nul-text {
+    color: darksalmon;
+    font-weight: bold;
+}

@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ITC File Upload Manual</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <nav class="navbar navbar-expand-sm bg-primary navbar-dark">
+        <div class="container">
+            <!-- Links -->
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link active" href="index.php">Home</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <main class="container">
+        <div class="bg-light p-2">
+            <h2 class="pt-3">ITC File Upload User Manual</h2>
+            <hr>
+            <h4>Include <b>Upload.php</b> file to your Action class or page. Create an object for <b>Upload Class</b> and Pass the argument Config array. Like as- </h4>
+            <div class="border p-3 code-border mb-3">
+                <pre>
+                    <code>
+                    <span class="text-danger">&lt;?php </span>
+                        <span class="text-success">// configer file type</span>
+                        <span class="variable">$file_type</span> = <span class="variable">[</span>"jpg","png","jpeg","gif"<span class="variable">]</span>
+                        <span class="variable">$config_data</span> = <span class="variable"> [</span>
+                            <span class="array-element">"file_name"</span> => <span class="nul-text">null</span>, <span class="text-success">//you may set a file name</span>
+                            <span class="array-element">"name_attribute"</span> => <span class="array-element">"image"</span>, <span class="text-success">//value of input field name attribute</span>
+                            <span class="array-element">"file_type"</span> => <span class="variable">$file_type</span>,
+                            <span class="array-element">"max_size"</span> => 4000,   <span class="text-success">//size may "KB", default size "1KB"</span>
+                            <span class="array-element">"target_dir"</span> => <span class="array-element">"images/"</span>,
+                            <span class="array-element">"upload_option"</span> => <span class="array-element">"single"</span> <span class="text-success">//upload option may be "multiple" or "single"</span>
+                        <span class="variable">]</span>
+                        <span class="variable">$up</span> = <span class="null-text">new</span> <span class="text-primary">Upload</span>(<span class="variable">$config_data</span>);
+                    <span class="text-danger">?&gt;</span>
+                    </code>
+                </pre>
+            </div>
+            <b>HTML form configeration for single upload</b>
+            <div class="border p-3 code-border mb-3">
+                <pre>
+                    <code>
+                    <span class="variable">&lt;</span><span class="text-primary">form</span> <span class="array-element">enctype</span>=<span class="text-success">"multiplar/form-data"</span> <span class="array-element">method</span>=<span class="text-success">"post"</span><span class="variable">&gt;</span>
+                        <span class="variable">&lt;</span><span class="text-primary">input</span> <span class="array-element">type</span>=<span class="text-success">"file"</span><span class="array-element"> name</span>=<span class="text-success">"image"</span> <span class="variable">&gt;</span>
+                    <span class="variable">&lt; &#47;</span> <span class="text-primary">form</span><span class="variable">&gt;</span>
+                    </code>
+                </pre>
+            </div>
+            <b>HTML form configeration for multiple upload</b>
+            <p>If you want to uploat multiple file at time. You need to modify <b>config_data</b> array and replace <b>"upload_option"=&gt; "single"</b> to <b>"upload_option"=&gt; "multiple"</b></p>
+            <div class="border p-3 code-border mb-3">
+                <pre>
+                    <code>
+                    <span class="variable">&lt;</span><span class="text-primary">form</span> <span class="array-element">enctype</span>=<span class="text-success">"multiplar/form-data"</span> <span class="array-element">method</span>=<span class="text-success">"post"</span><span class="variable">&gt;</span>
+                        <span class="variable">&lt;</span><span class="text-primary">input</span> <span class="array-element">type</span>=<span class="text-success">"file"</span><span class="array-element"> name</span>=<span class="text-success">"image[]" <span class="variable">multiple </span></span> <span class="variable">&gt;</span>
+                    <span class="variable">&lt; &#47;</span> <span class="text-primary">form</span><span class="variable">&gt;</span>
+                    </code>
+                </pre>
+            </div>
+            <b>For upload call "Store()" method</b>
+            <p>For submit form add this line of code to your <b>action page</b> or <b>class</b></p>
+            <div class="border p-3 code-border mb-3">
+                <pre>
+                    <code>
+                    <span class="variable">&lt;</span><sapn class="text-danger">?php</sapn> 
+                        <span class="text-primary">if</span><span class="variable">(</span><span class="variable">$_SERVER[</span><span class="array-element"> 'REQUEST_METHOD'</span><span class="variable">]</span>==<span class="array-element">'POST'</span><span class="variable">)</span>
+                        <span class="text-primary">{</span>
+                            <span class="variable">$upload</span><span class="text-danger">-&gt;</span> <span class="text-primary">store()</span>;
+                        <span class="text-primary">}</span>
+                    <span class="text-danger">?</span><span class="variable">&gt;</span>
+                    </code>
+                </pre>
+            </div>
+            <b>For store it on your database</b>
+            <p>Modify this line of code and call method <b>get_target_file()</b> to store file name and directoy</p>
+            <div class="border p-3 code-border mb-3">
+                <pre>
+                    <code>
+                    <span class="variable">&lt;</span><sapn class="text-danger">?php</sapn> 
+                        <span class="text-primary">if</span><span class="variable">(</span><span class="variable">$_SERVER[</span><span class="array-element"> 'REQUEST_METHOD'</span><span class="variable">]</span>==<span class="array-element">'POST'</span><span class="variable">)</span>
+                        <span class="text-primary">{</span>
+                            <span class="variable">$upload</span><span class="text-danger">-&gt;</span> <span class="text-primary">store()</span>;
+                            <span class="variable">$target_file </span>= <span class="variable">$upload</span><span class="text-danger">-&gt;</span> <span class="text-primary">get_target_file()</span>; <span class="text-success">//Store it one your database</span>
+                        <span class="text-primary">}</span>
+                    <span class="text-danger">?</span><span class="variable">&gt;</span>
+                    </code>
+                </pre>
+            </div>
+            <p>Allowed file type bydefault jpg,png,jpeg,gif. if you want to change file formate modify the <b>file_type</b> array. you can also remove or add new <b>file formate</b> to allow. If you want to allow all of file formate simple set null to <b>file_type</b> Like as- </p>
+            <b>Remove a file formate that not allow</b>
+            <div class="border p-3 code-border mb-3">
+                <pre>
+                    <code>
+                    <span class="variable">$file_type</span> = <span class="variable">[</span>"jpg","png","jpeg"<span class="variable">]</span>
+                    </code>
+                </pre>
+            </div>
+            <b>Add a file forate that want to allow</b>
+            <div class="border p-3 code-border mb-lg-3">
+                <pre>
+                    <code>
+                    <span class="variable">$file_type</span> = <span class="variable">[</span>"jpg","png","jpeg","gif","pdf"<span class="variable">]</span>
+                    </code>
+                </pre>
+            </div>
+            <b>Allow all file formate</b>
+            <div class="border p-3 code-border mb-lg-3">
+                <pre>
+                    <code>
+                    <span class="variable">$file_type</span> = <span class="nul-text">null</span>
+                    </code>
+                </pre>
+            </div>
+            <b>Add file name</b>
+            <p>If you want to add a file name like <b>User-1010221100.png</b> simply replace <b>file_name</b> <em>null</em> to <b>"your file name"</b></p>
+            <div class="border p-3 code-border mb-lg-3">
+                <pre>
+                    <code>
+                    <span class="array-element">"file_name"</span> => <span class="array-element">"User"</span>, <span class="text-success">//you may set a file name</span>
+                    </code>
+                </pre>
+            </div>
+        </div>
+    </main>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+</body>
+</html>
